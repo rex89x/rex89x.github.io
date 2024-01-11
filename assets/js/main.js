@@ -9,6 +9,11 @@
   "use strict";
 
   /**
+   * Define Variables
+   */
+  const btnContactMe = document.getElementById("submit_contact");
+
+  /**
    * Easy selector helper function
    */
   const select = (el, all = false) => {
@@ -260,3 +265,104 @@
   new PureCounter();
 
 })()
+
+// https://docs.google.com/forms/d/e/1FAIpQLSerrnf02zF3jY_RGsQ_Xhc6ZK-v8Eb_F3JASdQ-rETRzNZqFQ/viewform?usp=sf_link
+function btnContactMeFunc() {
+    // Name: entry.1070445722
+    // Email: entry.596770443
+    // title: entry.367427292
+    // question: entry.1128582139
+    // datetime: entry.487170711
+    let msgConfirm = confirm('確定傳送？');
+    if (msgConfirm) {
+        sendFormData();
+        //location.reload();
+    }
+}
+
+function sendFormData() {
+    event.preventDefault();
+    var name = document.getElementById("inputName");
+    var email = document.getElementById("inputEmail");
+    var title = document.getElementById("inputTitle");
+    var question = document.getElementById("inputQuestion");
+    var datetime = "20230614";
+
+    var url = "https://docs.google.com/forms/d/e/1FAIpQLSerrnf02zF3jY_RGsQ_Xhc6ZK-v8Eb_F3JASdQ-rETRzNZqFQ/viewform";
+
+    var data = {
+      "entry.1070445722": name,
+      "entry.596770443": email,
+      "entry.367427292": title,
+      "entry.1128582139": question,
+      "entry.487170711": datetime
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencode');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            alert("表單已成功提交！");
+        } else {
+            alert("表單提交失敗！");
+        }
+    };
+    xhr.send(encodeFormData(data));
+}
+
+function encodeFormData(data) {
+    var encodedData = "";
+    for (var key in data) {
+        if (encodedData !== "") {
+            encodedData += "&";
+        }
+        encodedData += encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
+    }
+    return encodedData;
+}
+
+/*
+document.getElementById("myForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // 防止表單提交的預設行為
+
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var message = document.getElementById("message").value;
+
+    // 將表單資料送至 Google Cloud Form 的網址
+    var url = "https://docs.google.com/forms/d/e/your_form_id/formResponse";
+    
+    // 設定 POST 請求的資料
+    var data = {
+        "entry.your_name_field_id": name,
+        "entry.your_email_field_id": email,
+        "entry.your_message_field_id": message
+    };
+    
+    // 使用 XMLHttpRequest 發送 POST 請求
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            alert("表單已成功提交！");
+        } else {
+            alert("表單提交失敗！");
+        }
+    };
+    xhr.send(encodeFormData(data));
+});
+
+// 將 JavaScript 物件編碼為表單資料格式
+function encodeFormData(data) {
+      var encodedData = "";
+      for (var key in data) {
+          if (encodedData !== "") {
+              encodedData += "&";
+          }
+          encodedData += encodeURIComponent(key) + "=" + encodeURIComponent(data[key]);
+      }
+      return encodedData;
+  }
+*/
