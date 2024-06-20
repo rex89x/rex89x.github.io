@@ -3002,6 +3002,7 @@ $bootstrap-icons-map: (
 .bi-people-fill::before { content: map-get($bootstrap-icons-map, "people-fill"); }
 .bi-people::before { content: map-get($bootstrap-icons-map, "people"); }
 .bi-percent::before { content: map-get($bootstrap-icons-map, "percent"); }
+.bi-person-arms-up::before { content: map-get($bootstrap-icons-map, "person-arms-up"); }
 .bi-person-badge-fill::before { content: map-get($bootstrap-icons-map, "person-badge-fill"); }
 .bi-person-badge::before { content: map-get($bootstrap-icons-map, "person-badge"); }
 .bi-person-bounding-box::before { content: map-get($bootstrap-icons-map, "person-bounding-box"); }

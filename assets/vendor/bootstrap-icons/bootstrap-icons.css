@@ -998,6 +998,7 @@ url("./fonts/bootstrap-icons.woff?24e3eb84d0bcaf83d77f904c78ac1f47") format("wof
 .bi-people-fill::before { content: "\f4cf"; }
 .bi-people::before { content: "\f4d0"; }
 .bi-percent::before { content: "\f4d1"; }
+.bi-person-arms-up { content: "\f8f6" }
 .bi-person-badge-fill::before { content: "\f4d2"; }
 .bi-person-badge::before { content: "\f4d3"; }
 .bi-person-bounding-box::before { content: "\f4d4"; }

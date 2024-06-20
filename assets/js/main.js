@@ -260,6 +260,49 @@
   });
 
   /**
+   * Form submit
+   */
+  const form = document.getElementById('contactForm');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = {
+        "inputName": document.getElementById("inputName").value,
+        "inputEmail": document.getElementById("inputEmail").value,
+        "inputTitle": document.getElementById("inputTitle").value,
+        "inputQuestion": document.getElementById("inputQuestion").value,
+      };
+
+      const scriptID = "AKfycbwl2qd8DBaQe6v9ZMKNbZ36x_PKuYQcEru_mdXV2Ad1Q8xUq7bS3UxASTepQYUdYkwW"
+      const apiUrl = `https://script.google.com/macros/s/${scriptID}/exec`;
+
+      await fetch(apiUrl, {
+        redirect: "follow",
+        method: 'POST',
+        body: JSON.stringify({
+          inputName: document.getElementById("inputName").value,
+          inputEmail: document.getElementById("inputEmail").value,
+          inputTitle: document.getElementById("inputTitle").value,
+          inputQuestion: document.getElementById("inputQuestion").value
+        }),
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        }
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          alert("表單已成功傳送！");
+          form.reset();
+        })
+        .catch((error) => {
+          alert("表單傳送失敗！");
+          console.log(error);
+        })
+    })
+
+  /**
    * Initiate Pure Counter 
    */
   new PureCounter();
@@ -267,12 +310,8 @@
 })()
 
 // https://docs.google.com/forms/d/e/1FAIpQLSerrnf02zF3jY_RGsQ_Xhc6ZK-v8Eb_F3JASdQ-rETRzNZqFQ/viewform?usp=sf_link
+/*
 function btnContactMeFunc() {
-    // Name: entry.1070445722
-    // Email: entry.596770443
-    // title: entry.367427292
-    // question: entry.1128582139
-    // datetime: entry.487170711
     let msgConfirm = confirm('確定傳送？');
     if (msgConfirm) {
         sendFormData();
@@ -281,34 +320,31 @@ function btnContactMeFunc() {
 }
 
 function sendFormData() {
-    event.preventDefault();
-    var name = document.getElementById("inputName");
-    var email = document.getElementById("inputEmail");
-    var title = document.getElementById("inputTitle");
-    var question = document.getElementById("inputQuestion");
-    var datetime = "20230614";
+    const form = document.getElementById('contactForm');
 
-    var url = "https://docs.google.com/forms/d/e/1FAIpQLSerrnf02zF3jY_RGsQ_Xhc6ZK-v8Eb_F3JASdQ-rETRzNZqFQ/viewform";
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
 
-    var data = {
-      "entry.1070445722": name,
-      "entry.596770443": email,
-      "entry.367427292": title,
-      "entry.1128582139": question,
-      "entry.487170711": datetime
-    };
+      const scriptID = "AKfycbwl2qd8DBaQe6v9ZMKNbZ36x_PKuYQcEru_mdXV2Ad1Q8xUq7bS3UxASTepQYUdYkwW"
+      const apiUrl = `https://script.google.com/macros/s/${scriptID}/exec`;
 
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencode');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            alert("表單已成功提交！");
-        } else {
-            alert("表單提交失敗！");
-        }
-    };
-    xhr.send(encodeFormData(data));
+      await fetch(apiUrl, {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          alert("表單已成功傳送！");
+          form.reset();
+        })
+        .catch((error) => {
+          alert("表單傳送失敗！");
+          console.log(error);
+        })
+    })
 }
 
 function encodeFormData(data) {
@@ -321,6 +357,7 @@ function encodeFormData(data) {
     }
     return encodedData;
 }
+*/
 
 /*
 document.getElementById("myForm").addEventListener("submit", function(event) {
