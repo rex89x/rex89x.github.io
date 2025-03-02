@@ -5,9 +5,19 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
+const binId = "67c41ba4ad19ca34f8150b5a"; // 請替換成你的 JSONBin ID
+const apiKey = "$2a$10$Nxhctxp9N0JLldb2XRCB3uJQOnUyR60saiD0qdcdCYapeuBBce/i2";   // 請替換成你的 API Key
+const apiUrl = `https://api.jsonbin.io/v3/b/${binId}`;
+
 (function() {
   "use strict";
 
+  
+  /**
+   * Viewer Count
+   */
+  updateViewCount();
+  
   /**
    * Define Variables
    */
@@ -302,12 +312,57 @@
         })
     })
 
+
   /**
    * Initiate Pure Counter 
    */
   new PureCounter();
 
 })()
+
+
+async function updateViewCount() {
+  try {
+    console.log("Fetching view count..."); // ✅ 偵錯用
+    let response = await fetch(apiUrl, {
+      method: "GET",
+      headers: { "X-Master-Key": apiKey }
+    });
+
+    if (!response.ok) {
+      throw new Error(`獲取數據失敗，狀態碼: ${response.status}`);
+    }
+
+    let data = await response.json();
+    console.log("API Response:", data); // ✅ 偵錯用，看看 data 是否正確
+
+    let currentViews = data.record?.views || 0; // 確保數據存在
+    let newViews = currentViews + 1;
+
+    console.log(`Current Views: ${currentViews}, New Views: ${newViews}`); // ✅ 偵錯用
+
+    // 更新新的瀏覽次數
+    let updateResponse = await fetch(apiUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Master-Key": apiKey
+      },
+      body: JSON.stringify({ views: newViews })
+    });
+
+    if (!updateResponse.ok) {
+      throw new Error(`更新數據失敗，狀態碼: ${updateResponse.status}`);
+    }
+
+    console.log("View count updated successfully!"); // ✅ 偵錯用
+
+    // ✅ 確保正確更新 HTML
+    document.querySelectorAll("#viewerCount").forEach(el => el.textContent = newViews);
+  } catch (error) {
+    console.error("瀏覽次數更新失敗:", error);
+  }
+}
 
 // https://docs.google.com/forms/d/e/1FAIpQLSerrnf02zF3jY_RGsQ_Xhc6ZK-v8Eb_F3JASdQ-rETRzNZqFQ/viewform?usp=sf_link
 /*
