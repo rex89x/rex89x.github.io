@@ -276,15 +276,40 @@ const apiUrl = `https://api.jsonbin.io/v3/b/${binId}`;
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const formData = {
+
+      var formData = new FormData();
+      formData.append("inputName", document.getElementById("inputName").value);
+      formData.append("inputEmail", document.getElementById("inputEmail").value);
+      formData.append("inputTitle", document.getElementById("inputTitle").value);
+      formData.append("inputQuestion", document.getElementById("inputQuestion").value);
+
+      fetch("https://script.google.com/macros/s/AKfycbypt-mYZskymyT8a7vkN_-M39z12Qys3RQNtwh_PzQ/exec", {
+          method: "POST",
+          mode: "no-cors",
+          body: formData
+      })
+      .then(response => response.text())
+      .then(data => alert("表單已成功傳送！"))
+      .catch(error => console.error("表單傳送失敗！", error));
+      /*
+      var formData = {
         "inputName": document.getElementById("inputName").value,
         "inputEmail": document.getElementById("inputEmail").value,
         "inputTitle": document.getElementById("inputTitle").value,
         "inputQuestion": document.getElementById("inputQuestion").value,
       };
 
-      const scriptID = "AKfycbwl2qd8DBaQe6v9ZMKNbZ36x_PKuYQcEru_mdXV2Ad1Q8xUq7bS3UxASTepQYUdYkwW"
+      const scriptID = "AKfycbypt-mYZskymyT8a7vkN_-M39z12Qys3RQNtwh_PzQ"
       const apiUrl = `https://script.google.com/macros/s/${scriptID}/exec`;
+      
+      fetch(apiUrl, {
+          method: "POST",
+          body: JSON.stringify(formData),
+          headers: { "Content-Type": "application/json" }
+      })
+      .then(response => response.text())
+      .then(data => alert("表單已成功傳送！"))
+      .catch(error => console.error("表單傳送失敗！", error));
 
       await fetch(apiUrl, {
         redirect: "follow",
@@ -310,7 +335,8 @@ const apiUrl = `https://api.jsonbin.io/v3/b/${binId}`;
           alert("表單傳送失敗！");
           console.log(error);
         })
-    })
+        */
+    });
 
 
   /**
